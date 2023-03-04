@@ -25,7 +25,7 @@ func (this *K8sConfig) IstioRestClient() *istio.Clientset {
 func (*K8sConfig) K8sRestConfig() *rest.Config {
 	config, err := clientcmd.BuildConfigFromFlags("", "./resources/config")
 
-	config.Insecure = true
+	//config.Insecure = true
 
 	if err != nil {
 		log.Fatal(err)
