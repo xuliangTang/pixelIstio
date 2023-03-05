@@ -26,3 +26,19 @@ func (this *VsService) Create(vs *v1alpha3.VirtualService) error {
 
 	return err
 }
+
+func (this *VsService) Load(ns, name string) *v1alpha3.VirtualService {
+	vs := this.VsMap.Get(ns, name)
+	return vs
+}
+
+func (this *VsService) Update(vs *v1alpha3.VirtualService) error {
+	oldVs := this.Load(vs.Namespace, vs.Name)
+	vs.ResourceVersion = oldVs.ResourceVersion
+	_, err := this.IstioClient.NetworkingV1alpha3().VirtualServices(vs.Namespace).Update(context.Background(), vs, v1.UpdateOptions{})
+	return err
+}
+
+func (this *VsService) Delete(ns, name string) error {
+	return this.IstioClient.NetworkingV1alpha3().VirtualServices(ns).Delete(context.Background(), name, v1.DeleteOptions{})
+}
