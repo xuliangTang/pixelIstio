@@ -33,3 +33,14 @@ func (this *GateWayService) Create(gateway *v1alpha3.Gateway) error {
 func (this *GateWayService) Delete(ns, name string) error {
 	return this.IstioClient.NetworkingV1alpha3().Gateways(ns).Delete(context.Background(), name, v1.DeleteOptions{})
 }
+
+func (this *GateWayService) Show(ns, name string) *v1alpha3.Gateway {
+	return this.GatewayMap.Get(ns, name)
+}
+
+func (this *GateWayService) Update(gateway *v1alpha3.Gateway) error {
+	oldGW := this.Load(gateway.Namespace, gateway.Name)
+	gateway.ResourceVersion = oldGW.ResourceVersion
+	_, err := this.IstioClient.NetworkingV1alpha3().Gateways(gateway.Namespace).Update(context.Background(), gateway, v1.UpdateOptions{})
+	return err
+}

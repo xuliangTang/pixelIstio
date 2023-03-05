@@ -39,8 +39,26 @@ func (this *GatewayCtl) DeleteGW(c *gin.Context) (v athena.Void) {
 	return
 }
 
+func (this *GatewayCtl) ShowGW(ctx *gin.Context) any {
+	uri := &GatewayUri{}
+	athena.Error(ctx.BindUri(&uri))
+
+	return this.GwService.Show(uri.Namespace, uri.Name)
+}
+
+func (this *GatewayCtl) Update(ctx *gin.Context) (v athena.Void) {
+	gw := &v1alpha3.Gateway{}
+	athena.Error(ctx.BindJSON(&gw))
+	athena.Error(this.GwService.Update(gw))
+
+	ctx.Set(athena.CtxHttpStatusCode, http.StatusNoContent)
+	return
+}
+
 func (this *GatewayCtl) Build(athena *athena.Athena) {
 	athena.Handle("GET", "/gateways", this.GwList)
 	athena.Handle("POST", "/gateway", this.CreateGateway)
 	athena.Handle("DELETE", "/gateway/:ns/:name", this.DeleteGW)
+	athena.Handle("GET", "/gateway/:ns/:name", this.ShowGW)
+	athena.Handle("PUT", "/gateway", this.Update)
 }
