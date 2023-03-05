@@ -66,6 +66,21 @@ func (this *GatewayMap) ListByNs(ns string) []*v1alpha3.Gateway {
 	return []*v1alpha3.Gateway{}
 }
 
+func (this *GatewayMap) ListAll() []map[string]interface{} {
+	ret := make([]map[string]interface{}, 0)
+
+	this.Data.Range(func(key, value interface{}) bool {
+		m := map[string]interface{}{
+			"ns":   key,
+			"list": value,
+		}
+		ret = append(ret, m)
+		return true
+	})
+
+	return ret
+}
+
 type GW []*v1alpha3.Gateway
 
 func (this GW) Len() int {

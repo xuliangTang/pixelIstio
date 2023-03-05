@@ -20,6 +20,10 @@ func (this *GateWayService) ListByNs(ns string) []*v1alpha3.Gateway {
 	return this.GatewayMap.ListByNs(ns)
 }
 
+func (this *GateWayService) ListAll() []map[string]interface{} {
+	return this.GatewayMap.ListAll()
+}
+
 func (this *GateWayService) Load(ns, name string) *v1alpha3.Gateway {
 	gw := this.GatewayMap.Get(ns, name)
 	return gw

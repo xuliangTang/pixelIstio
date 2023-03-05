@@ -17,8 +17,11 @@ func NewGatewayCtl() *GatewayCtl {
 
 func (this *GatewayCtl) GwList(c *gin.Context) any {
 	ns := c.DefaultQuery("ns", "default")
+	if ns != "" {
+		return this.GwService.ListByNs(ns)
+	}
 
-	return this.GwService.ListByNs(ns)
+	return this.GwService.ListAll()
 }
 
 func (this *GatewayCtl) CreateGateway(c *gin.Context) any {
