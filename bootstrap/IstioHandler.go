@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"pixelIstio/pkg/gw"
 	"pixelIstio/pkg/vs"
 )
 
@@ -14,4 +15,8 @@ func NewIstioHandler() *IstioHandler {
 // VsHandler handler
 func (this *IstioHandler) VsHandler() *vs.VsHandler {
 	return &vs.VsHandler{}
+}
+
+func (this *IstioHandler) GwHandler() *gw.GateWayHandler {
+	return &gw.GateWayHandler{}
 }
