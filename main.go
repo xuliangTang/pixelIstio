@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/xuliangTang/athena/athena"
 	"pixelIstio/bootstrap"
+	"pixelIstio/pkg/dr"
 	"pixelIstio/pkg/gw"
 	"pixelIstio/pkg/namespace"
 	"pixelIstio/pkg/vs"
@@ -21,6 +22,7 @@ func main() {
 		vs.NewVsCtl(),
 		namespace.NewNsCtl(),
 		gw.NewGatewayCtl(),
+		dr.NewDestinationRuleCtl(),
 		wscore.NewWsCtl(),
 	)
 

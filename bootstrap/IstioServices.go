@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"pixelIstio/pkg/dr"
 	"pixelIstio/pkg/gw"
 	"pixelIstio/pkg/vs"
 )
@@ -17,4 +18,8 @@ func (*IstioServiceConfig) VsService() *vs.VsService {
 
 func (*IstioServiceConfig) GwService() *gw.GateWayService {
 	return gw.NewGateWayService()
+}
+
+func (*IstioServiceConfig) DrService() *dr.DestinationRuleService {
+	return dr.NewDestinationRuleService()
 }

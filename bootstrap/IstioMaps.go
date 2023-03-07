@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"pixelIstio/pkg/dr"
 	"pixelIstio/pkg/gw"
 	"pixelIstio/pkg/vs"
 )
@@ -19,4 +20,8 @@ func (this *IstioMaps) InitVsMap() *vs.VsMapStruct {
 
 func (this *IstioMaps) InitGwMap() *gw.GatewayMap {
 	return &gw.GatewayMap{}
+}
+
+func (this *IstioMaps) InitDrMap() *dr.DestinationRuleMap {
+	return &dr.DestinationRuleMap{}
 }

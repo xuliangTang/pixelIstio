@@ -4,14 +4,16 @@ import (
 	istio "istio.io/client-go/pkg/clientset/versioned"
 	"istio.io/client-go/pkg/informers/externalversions"
 	"k8s.io/apimachinery/pkg/util/wait"
+	"pixelIstio/pkg/dr"
 	"pixelIstio/pkg/gw"
 	"pixelIstio/pkg/vs"
 )
 
 type IstioInformerStart struct {
-	IstioClient *istio.Clientset   `inject:"-"`
-	VsHandler   *vs.VsHandler      `inject:"-"`
-	GwHandler   *gw.GateWayHandler `inject:"-"`
+	IstioClient *istio.Clientset           `inject:"-"`
+	VsHandler   *vs.VsHandler              `inject:"-"`
+	GwHandler   *gw.GateWayHandler         `inject:"-"`
+	DrHandler   *dr.DestinationRuleHandler `inject:"-"`
 }
 
 func NewIstioInformerStart() *IstioInformerStart {
@@ -26,6 +28,8 @@ func (this *IstioInformerStart) InitInformer() externalversions.SharedInformerFa
 	fact.Networking().V1alpha3().VirtualServices().Informer().AddEventHandler(this.VsHandler)
 	// 网关的监听
 	fact.Networking().V1alpha3().Gateways().Informer().AddEventHandler(this.GwHandler)
+	// 目标规则的监听
+	fact.Networking().V1alpha3().DestinationRules().Informer().AddEventHandler(this.DrHandler)
 
 	fact.Start(wait.NeverStop)
 
