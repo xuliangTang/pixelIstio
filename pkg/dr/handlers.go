@@ -14,7 +14,7 @@ type DestinationRuleHandler struct {
 
 func (this *DestinationRuleHandler) OnAdd(obj interface{}) {
 	this.DestinationRuleMap.Add(obj.(*v1alpha3.DestinationRule))
-	ns := obj.(*v1alpha3.Gateway).Namespace
+	ns := obj.(*v1alpha3.DestinationRule).Namespace
 	wscore.ClientMap.SendAll(
 		gin.H{
 			"type": "dr",
@@ -31,7 +31,7 @@ func (this *DestinationRuleHandler) OnUpdate(oldObj, newObj interface{}) {
 		log.Println(err)
 		return
 	}
-	ns := newObj.(*v1alpha3.Gateway).Namespace
+	ns := newObj.(*v1alpha3.DestinationRule).Namespace
 	wscore.ClientMap.SendAll(
 		gin.H{
 			"type": "dr",
@@ -45,7 +45,7 @@ func (this *DestinationRuleHandler) OnUpdate(oldObj, newObj interface{}) {
 
 func (this *DestinationRuleHandler) OnDelete(obj interface{}) {
 	this.DestinationRuleMap.Delete(obj.(*v1alpha3.DestinationRule))
-	ns := obj.(*v1alpha3.Gateway).Namespace
+	ns := obj.(*v1alpha3.DestinationRule).Namespace
 
 	wscore.ClientMap.SendAll(
 		gin.H{
